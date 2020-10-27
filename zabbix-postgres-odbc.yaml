@@ -1,0 +1,1477 @@
+zabbix_export:
+  version: '5.2'
+  date: '2020-10-27T12:20:52Z'
+  groups:
+    -
+      name: Templates
+    -
+      name: Templates/Databases
+  templates:
+    -
+      template: 'Template DB PostgreSQL ODBC'
+      name: 'Template DB PostgreSQL ODBC'
+      groups:
+        -
+          name: Templates
+        -
+          name: Templates/Databases
+      applications:
+        -
+          name: PostgreSQL
+      items:
+        -
+          name: 'PostgreSQL: dbstat - Blocks hit per second'
+          type: ODBC
+          key: 'db.odbc.select[blks_hit, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(blks_hit)
+            FROM    pg_stat_database
+                                
+          description: 'Number of times disk blocks were found already in the buffer cache, so that a read was not necessary (this only includes hits in the PostgreSQL buffer cache, not the operating system''s file system cache)'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: dbstat - Blocks read per second'
+          type: ODBC
+          key: 'db.odbc.select[blks_read, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(blks_read)
+            FROM    pg_stat_database
+                                
+          description: 'Number of disk blocks read'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+        -
+          name: '[PostgreSQL] Buffers: Clear'
+          type: ODBC
+          key: 'db.odbc.select[buffercache-clear, ${ODBC_CONN}]'
+          delay: 10m
+          history: 30d
+          status: DISABLED
+          units: b
+          params: |
+            SELECT  count(*)
+            FROM    pg_buffercache
+            WHERE   NOT isdirty
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '8192'
+        -
+          name: '[PostgreSQL] Buffers: Dirty'
+          type: ODBC
+          key: 'db.odbc.select[buffercache-dirty, ${ODBC_CONN}]'
+          delay: 10m
+          history: 30d
+          status: DISABLED
+          units: b
+          params: |
+            SELECT  count(*)
+            FROM    pg_buffercache
+            WHERE   isdirty
+                                
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '8192'
+        -
+          name: '[PostgreSQL] Buffers: Total'
+          type: ODBC
+          key: 'db.odbc.select[buffercache-total, ${ODBC_CONN}]'
+          delay: 10m
+          history: 30d
+          status: DISABLED
+          units: b
+          params: |
+            SELECT  count(*)
+            FROM    pg_buffercache
+                                
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '8192'
+        -
+          name: '[PostgreSQL] Buffers: Used'
+          type: ODBC
+          key: 'db.odbc.select[buffercache-used, ${ODBC_CONN}]'
+          delay: 10m
+          history: 30d
+          status: DISABLED
+          units: b
+          params: |
+            SELECT  count(*)
+            FROM    pg_buffercache
+            WHERE   reldatabase IS NOT NULL
+                                
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '8192'
+        -
+          name: 'PostgreSQL: bgwriter - Buffers allocated'
+          type: ODBC
+          key: 'db.odbc.select[buffers_alloc, ${ODBC_CONN}]'
+          delay: '600'
+          history: 30d
+          units: b
+          params: |
+            SELECT  buffers_alloc
+            FROM    pg_stat_bgwriter
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+            -
+              type: MULTIPLIER
+              parameters:
+                - '8192'
+        -
+          name: 'PostgreSQL: bgwriter - Buffers written directly by a backend'
+          type: ODBC
+          key: 'db.odbc.select[buffers_backend, ${ODBC_CONN}]'
+          delay: '600'
+          history: 30d
+          units: b
+          params: |
+            SELECT buffers_backend
+            FROM    pg_stat_bgwriter
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+            -
+              type: MULTIPLIER
+              parameters:
+                - '8192'
+        -
+          name: 'PostgreSQL: bgwriter - Times a backend had to execute its own fsync'
+          type: ODBC
+          key: 'db.odbc.select[buffers_backend_fsync, ${ODBC_CONN}]'
+          delay: '600'
+          history: 30d
+          params: |
+            SELECT buffers_backend_fsync
+            FROM    pg_stat_bgwriter
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: bgwriter - Buffers written during checkpoints'
+          type: ODBC
+          key: 'db.odbc.select[buffers_checkpoint, ${ODBC_CONN}]'
+          delay: '600'
+          history: 30d
+          units: b
+          params: |
+            SELECT  buffers_checkpoint
+            FROM    pg_stat_bgwriter
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+            -
+              type: MULTIPLIER
+              parameters:
+                - '8192'
+        -
+          name: 'PostgreSQL: bgwriter - Buffers written by the bgwriter'
+          type: ODBC
+          key: 'db.odbc.select[buffers_clean, ${ODBC_CONN}]'
+          delay: '600'
+          history: 30d
+          units: b
+          params: |
+            SELECT  buffers_clean
+            FROM    pg_stat_bgwriter
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+            -
+              type: MULTIPLIER
+              parameters:
+                - '8192'
+        -
+          name: '[PostgreSQL] General: Cache - Hit ratio'
+          type: ODBC
+          key: 'db.odbc.select[cache-hits, ${ODBC_CONN}]'
+          delay: 1h
+          history: 30d
+          value_type: FLOAT
+          units: '%'
+          params: |
+            SELECT  round(sum(blks_hit)*100/sum(blks_hit+blks_read), 2)
+            FROM    pg_stat_database
+                                
+          description: 'Check cache hit ratio in %.'
+          applications:
+            -
+              name: PostgreSQL
+          triggers:
+            -
+              expression: '{max(#5)}<{$PG_CACHE_HIT_RATIO}'
+              name: 'PostgreSQL: Cache hit ratio too low ({ITEM.LASTVALUE})'
+              priority: WARNING
+              manual_close: 'YES'
+        -
+          name: 'PostgreSQL: bgwriter - Required checkpoints'
+          type: ODBC
+          key: 'db.odbc.select[checkpoints_req, ${ODBC_CONN}]'
+          delay: '600'
+          history: 30d
+          params: |
+            SELECT  checkpoints_req
+            FROM    pg_stat_bgwriter
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          triggers:
+            -
+              expression: '{last()}>{$PG_CHECKPOINTS_REQ_THRESHOLD}'
+              name: 'PostgreSQL: Required checkpoints occurs to frequently'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: 'PostgreSQL: bgwriter - Checkpoints by timeout'
+          type: ODBC
+          key: 'db.odbc.select[checkpoints_timed, ${ODBC_CONN}]'
+          delay: '600'
+          history: 30d
+          params: |
+            SELECT  checkpoints_timed
+            FROM    pg_stat_bgwriter
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: bgwriter - Sync time'
+          type: ODBC
+          key: 'db.odbc.select[checkpoint_sync_time, ${ODBC_CONN}]'
+          delay: '600'
+          history: 30d
+          units: ms
+          params: |
+            SELECT  checkpoint_sync_time
+            FROM    pg_stat_bgwriter
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: bgwriter - Write time'
+          type: ODBC
+          key: 'db.odbc.select[checkpoint_write_time, ${ODBC_CONN}]'
+          delay: '600'
+          history: 30d
+          units: ms
+          params: |
+            SELECT  checkpoint_write_time
+            FROM    pg_stat_bgwriter
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: dbstat - Registered conflicts'
+          type: ODBC
+          key: 'db.odbc.select[conflicts, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(conflicts)
+            FROM    pg_stat_database
+                                
+          description: 'Number of queries canceled due to conflicts with recovery in this database. (Conflicts occur only on standby servers; see pg_stat_database_conflicts for details.).'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          triggers:
+            -
+              expression: '{last()}>{$PG_CONFLICTS_THRESHOLD}'
+              name: 'PostgreSQL: Recovery conflict occured'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: 'PostgreSQL: connections - Number of active'
+          type: ODBC
+          key: 'db.odbc.select[connections-active, ${ODBC_CONN}]'
+          delay: '60'
+          history: 30d
+          params: |
+            SELECT  count(*)
+            FROM    pg_stat_activity
+            WHERE   state = 'active'
+                                
+          description: 'Total count of active clients who connected to the PostgreSQL service and performing work.'
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: 'PostgreSQL: connections - Number of idle'
+          type: ODBC
+          key: 'db.odbc.select[connections-idle, ${ODBC_CONN}]'
+          delay: '60'
+          history: 30d
+          params: |
+            SELECT  count(*)
+            FROM    pg_stat_activity
+            WHERE   state = 'idle'
+                                
+          description: 'Total count of idle clients connected to the PostgreSQL service.'
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: 'PostgreSQL: connections - Number of idle in transaction'
+          type: ODBC
+          key: 'db.odbc.select[connections-idle_in_transaction, ${ODBC_CONN}]'
+          delay: '60'
+          history: 30d
+          params: |
+            SELECT  count(*)
+            FROM    pg_stat_activity
+            WHERE   state = 'idle in transaction'
+                                
+          description: 'Total count of idle clients who connected to the PostgreSQL service and have unfinished transaction. This client must be disconnected.'
+          applications:
+            -
+              name: PostgreSQL
+          triggers:
+            -
+              expression: '{min(#5)}>{$PG_CONN_IDLE_IN_TRANSACTION}'
+              name: 'PostgreSQL: Idle in transaction connections to high ({ITEM.LASTVALUE})'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: 'PostgreSQL: connections - Number of prepared'
+          type: ODBC
+          key: 'db.odbc.select[connections-prepared, ${ODBC_CONN}]'
+          delay: '60'
+          history: 30d
+          params: |
+            SELECT  count(*)
+            FROM    pg_prepared_xacts
+          description: 'Total count of clients connected to the PostgreSQL service and blocked by others clients.'
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: 'PostgreSQL: connections - Total'
+          type: ODBC
+          key: 'db.odbc.select[connections-total, ${ODBC_CONN}]'
+          delay: '60'
+          history: 30d
+          params: |
+            SELECT  count(*)
+            FROM    pg_stat_activity
+                                
+          description: 'Total count of clients connected to the PostgreSQL service.'
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: 'PostgreSQL: connections - Total (%)'
+          type: ODBC
+          key: 'db.odbc.select[connections-total_pct, ${ODBC_CONN}]'
+          delay: '60'
+          history: 30d
+          units: '%'
+          params: |
+            SELECT  count(*)*100/(SELECT current_setting('max_connections')::int)
+            FROM    pg_stat_activity
+                                
+          description: 'Connections percentage of the maximum number of allowed connections (max_connections).'
+          applications:
+            -
+              name: PostgreSQL
+          triggers:
+            -
+              expression: '{last()}>{$PG_CONN_TOTAL_PCT}'
+              name: 'PostgreSQL: Total number of connections to high ({ITEM.LASTVALUE})'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: 'PostgreSQL: connections - Number of waiting'
+          type: ODBC
+          key: 'db.odbc.select[connections-waiting, ${ODBC_CONN}]'
+          delay: '60'
+          history: 30d
+          status: DISABLED
+          params: |
+            SELECT  count(*)
+            FROM    pg_stat_activity
+            WHERE   wait_event IS NOT NULL
+                                
+          description: 'Total count of clients connected to the PostgreSQL service and blocked by others clients.'
+          applications:
+            -
+              name: PostgreSQL
+          triggers:
+            -
+              expression: '{last()}>{$PG_CONN_WAITING}'
+              name: 'PostgreSQL: Number of waiting connections to high ({ITEM.LASTVALUE})'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: 'PostgreSQL: dbstat - Registered deadlocks'
+          type: ODBC
+          key: 'db.odbc.select[deadlocks, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(deadlocks)
+            FROM    pg_stat_database
+                                
+          description: 'Number of deadlocks detected.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          triggers:
+            -
+              expression: '{last()}>{$PG_DEADLOCKS_THRESHOLD}'
+              name: 'PostgreSQL: Deadlock occured'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: 'PostgreSQL: settings - $2'
+          type: ODBC
+          key: 'db.odbc.select[fsync, ${ODBC_CONN}]'
+          delay: '21600'
+          history: 30d
+          trends: '0'
+          value_type: CHAR
+          params: 'SELECT  current_setting(''fsync'')'
+          description: 'http://www.postgresql.org/docs/9.2/static/runtime-config-wal.html#GUC-FSYNC'
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: 'PostgreSQL: settings - $2'
+          type: ODBC
+          key: 'db.odbc.select[full_page_writes, ${ODBC_CONN}]'
+          delay: '21600'
+          history: 30d
+          trends: '0'
+          value_type: CHAR
+          params: 'SELECT  current_setting(''full_page_writes'')'
+          description: 'http://www.postgresql.org/docs/9.2/static/runtime-config-wal.html#GUC-FULL-PAGE-WRITES'
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: 'PostgreSQL: bgwriter - Max written'
+          type: ODBC
+          key: 'db.odbc.select[maxwritten_clean, ${ODBC_CONN}]'
+          delay: '600'
+          history: 30d
+          units: ms
+          params: |
+            SELECT  maxwritten_clean
+            FROM    pg_stat_bgwriter
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+        -
+          name: '[PostgreSQL] General: Ping (Timing)'
+          type: ODBC
+          key: 'db.odbc.select[ping, ${ODBC_CONN}]'
+          delay: 10m
+          history: 30d
+          value_type: FLOAT
+          units: ms
+          params: |
+            \timing on
+            SELECT  1
+          applications:
+            -
+              name: PostgreSQL
+          triggers:
+            -
+              expression: '{last()}>{$PG_PING_THRESHOLD_MS}'
+              name: 'PostgreSQL: Ping response to long ({ITEM.LASTVALUE})'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: '[PostgreSQL] General: Query time (avg)'
+          type: ODBC
+          key: 'db.odbc.select[stats_statements-avg_query_time, ${ODBC_CONN}]'
+          delay: 5m
+          history: 30d
+          status: DISABLED
+          value_type: FLOAT
+          units: ms
+          params: |
+            
+                                SELECT round((sum(total_time) / sum(calls))::numeric,2)
+            FROM   pg_stat_statements
+                                
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: '[PostgreSQL] Streaming: Replication - Stand-by count'
+          type: ODBC
+          key: 'db.odbc.select[streaming-count, ${ODBC_CONN}]'
+          delay: 5m
+          history: 30d
+          params: |
+            SELECT  count(*)
+            FROM    pg_stat_replication
+          description: 'Streaming replication stand-bys count.'
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: '[PostgreSQL] Streaming: Replication - Recovery state'
+          type: ODBC
+          key: 'db.odbc.select[streaming-state, ${ODBC_CONN}]'
+          delay: 1h
+          trends: '0'
+          value_type: CHAR
+          params: 'SELECT  pg_is_in_recovery()'
+          description: 'Streaming replication state: t (true) if service is in recovery mode, and f (false) if server in master mode.'
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: 'PostgreSQL: settings - $2'
+          type: ODBC
+          key: 'db.odbc.select[synchronous_commit, ${ODBC_CONN}]'
+          delay: '21600'
+          history: 30d
+          trends: '0'
+          value_type: CHAR
+          params: 'SELECT  current_setting(''synchronous_commit'')'
+          description: 'http://www.postgresql.org/docs/9.2/static/runtime-config-wal.html#GUC-SYNCHRONOUS-COMMIT'
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: 'PostgreSQL: dbstat - Temp_bytes written'
+          type: ODBC
+          key: 'db.odbc.select[temp_bytes, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          units: b
+          params: |
+            SELECT  sum(temp_bytes)
+            FROM    pg_stat_database
+                                
+          description: 'Total amount of data written to temporary files by queries. All temporary files are counted, regardless of why the temporary file was created, and regardless of the log_temp_files setting.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: dbstat - Temp_files created'
+          type: ODBC
+          key: 'db.odbc.select[temp_files, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(temp_files)
+            FROM    pg_stat_database
+                                
+          description: 'Number of temporary files created by queries. All temporary files are counted, regardless of why the temporary file was created (e.g., sorting or hashing), and regardless of the log_temp_files setting.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+        -
+          name: '[PostgreSQL] Transactions: Current max active transaction time'
+          type: ODBC
+          key: 'db.odbc.select[transactions-active, ${ODBC_CONN}]'
+          history: 30d
+          value_type: FLOAT
+          units: s
+          params: |
+            SELECT  coalesce(extract(epoch FROM max(age(now(), query_start))), 0) FROM pg_stat_activity 
+            WHERE state <> 'idle in transaction' AND state <> 'idle'
+          applications:
+            -
+              name: PostgreSQL
+          triggers:
+            -
+              expression: '{last()}>{$PG_LONG_QUERY_THRESHOLD}'
+              name: 'PostgreSQL: Active transaction to long (time={ITEM.LASTVALUE})'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: 'PostgreSQL: transactions - Current max idle transaction time'
+          type: ODBC
+          key: 'db.odbc.select[transactions-idle, ${ODBC_CONN}]'
+          delay: '60'
+          history: 30d
+          value_type: FLOAT
+          units: s
+          params: |
+            SELECT  coalesce(extract(epoch FROM max(age(now(), query_start))), 0)
+            FROM    pg_stat_activity
+            WHERE   state='idle in transaction'
+                                
+          applications:
+            -
+              name: PostgreSQL
+          triggers:
+            -
+              expression: '{min(#3)}>{$PG_LONG_QUERY_THRESHOLD}'
+              name: 'PostgreSQL: Idle transaction to long ({ITEM.LASTVALUE})'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: 'PostgreSQL: transactions - Current max prepared transaction time'
+          type: ODBC
+          key: 'db.odbc.select[transactions-prepared, ${ODBC_CONN}]'
+          delay: '60'
+          history: 30d
+          value_type: FLOAT
+          units: s
+          params: |
+            SELECT  coalesce(extract(epoch FROM max(age(now(), prepared))), 0)
+            FROM    pg_prepared_xacts
+                                
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: 'PostgreSQL: transactions - Current max waiting transaction time'
+          type: ODBC
+          key: 'db.odbc.select[transactions-waiting, ${ODBC_CONN}]'
+          delay: '60'
+          history: 30d
+          status: DISABLED
+          value_type: FLOAT
+          units: s
+          params: |
+            SELECT  coalesce(extract(epoch FROM max(age(now(), query_start))), 0)
+            FROM    pg_stat_activity
+            WHERE   wait_event IS NOT NULL
+                                
+          applications:
+            -
+              name: PostgreSQL
+          triggers:
+            -
+              expression: '{last()}>{$PG_LONG_QUERY_THRESHOLD}'
+              name: 'PostgreSQL: Waiting transaction to long ({ITEM.LASTVALUE})'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: 'PostgreSQL: dbstat - Tuples deleted per second'
+          type: ODBC
+          key: 'db.odbc.select[tup_deleted, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            
+                                SELECT  sum(tup_deleted)
+            FROM    pg_stat_database
+                                
+          description: 'Number of rows deleted by queries.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: dbstat - Tuples fetched per second'
+          type: ODBC
+          key: 'db.odbc.select[tup_fetched, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(tup_fetched)
+            FROM    pg_stat_database
+                                
+          description: 'Number of rows fetched by queries.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: dbstat - Tuples inserted per second'
+          type: ODBC
+          key: 'db.odbc.select[tup_inserted, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(tup_inserted)
+            FROM    pg_stat_database
+                                
+          description: 'Number of rows inserted by queries.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: dbstat - Tuples returned per second'
+          type: ODBC
+          key: 'db.odbc.select[tup_returned, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(tup_returned)
+            FROM    pg_stat_database
+                                
+          description: 'Number of rows returned by queries.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: dbstat - Tuples updated per second'
+          type: ODBC
+          key: 'db.odbc.select[tup_updated, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(tup_updated)
+            FROM    pg_stat_database
+                                
+          description: 'Number of rows updated by queries.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+        -
+          name: '[PostgreSQL] General: Uptime'
+          type: ODBC
+          key: 'db.odbc.select[uptime, ${ODBC_CONN}]'
+          history: 30d
+          units: uptime
+          params: 'SELECT  date_part(''epoch'', now() - pg_postmaster_start_time())::int'
+          applications:
+            -
+              name: PostgreSQL
+          triggers:
+            -
+              expression: '{last()}<{$PG_UPTIME_THRESHOLD}'
+              name: 'PostgreSQL: Service was restarted (uptime={ITEM.LASTVALUE})'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          name: '[PostgreSQL] WAL: Segments count'
+          type: ODBC
+          key: 'db.odbc.select[wal-count, ${ODBC_CONN}]'
+          delay: 5m
+          history: 30d
+          params: |
+            SELECT  count(*)
+            FROM    pg_ls_dir('pg_wal')
+          description: 'Number of WAL segments stored in pg_xlog directory.'
+          applications:
+            -
+              name: PostgreSQL
+        -
+          name: '[PostgreSQL] WAL: Write'
+          type: ODBC
+          key: 'db.odbc.select[wal-write, ${ODBC_CONN}]'
+          delay: 5m
+          history: 30d
+          status: DISABLED
+          units: b
+          params: "SELECT\tpg_xlog_location_diff(pg_current_xlog_location(),'0/00000000')"
+          description: 'WAL write in bytes,.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: dbstat - Commits per second'
+          type: ODBC
+          key: 'db.odbc.select[xact_commit, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(xact_commit)
+            FROM    pg_stat_database
+                                
+          description: 'Number of transactions that have been committed.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+        -
+          name: 'PostgreSQL: dbstat - Rollbacks per second'
+          type: ODBC
+          key: 'db.odbc.select[xact_rollback, ${ODBC_CONN}]'
+          delay: '120'
+          history: 30d
+          params: |
+            SELECT  sum(xact_rollback)
+            FROM    pg_stat_database
+                                
+          description: 'Number of transactions that have been rolled back.'
+          applications:
+            -
+              name: PostgreSQL
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+        -
+          name: '[PostgreSQL] General: Number of running processes $1'
+          key: 'proc.num[,{$PG_PROCESS_NAME}]'
+          delay: 5m
+          history: 1w
+          trends: 90d
+          applications:
+            -
+              name: PostgreSQL
+          triggers:
+            -
+              expression: '{last()}=0'
+              name: 'PostgreSQL: Service not running'
+              priority: HIGH
+              manual_close: 'YES'
+      discovery_rules:
+        -
+          name: '[PostgreSQL] Discovery: Databases'
+          type: ODBC
+          key: 'db.odbc.discovery[db_list, ${ODBC_CONN}]'
+          delay: 12h
+          params: |
+            SELECT  datname, oid
+            FROM    pg_database
+            WHERE   NOT datistemplate
+                    AND datallowconn
+                    AND datname!='postgres'
+          filter:
+            conditions:
+              -
+                macro: '{#DBNAME}'
+                value: '^(?!(repmgr|.*lost\+found)$).*$'
+                formulaid: A
+          lifetime: 1d
+          description: 'PostgreSQL database discovery. Use regular expressions to configure search.'
+          item_prototypes:
+            -
+              name: '[PostgreSQL] Database {#DBNAME}: Size'
+              type: ODBC
+              key: 'db.odbc.select[db_size,{#DBOID}]'
+              delay: 15m
+              history: 30d
+              trends: 90d
+              units: b
+              params: 'select datname from pg_database;'
+              description: 'Single database size.'
+              applications:
+                -
+                  name: PostgreSQL
+          graph_prototypes:
+            -
+              name: '[PostgreSQL] Database {#DBNAME}: Size'
+              ymin_type_1: FIXED
+              graph_items:
+                -
+                  color: 00BB00
+                  yaxisside: RIGHT
+                  item:
+                    host: 'Template DB PostgreSQL ODBC'
+                    key: 'db.odbc.select[db_size,{#DBOID}]'
+        -
+          name: '[PostgreSQL] Discovery: Streaming stand-by'
+          type: ODBC
+          key: 'db.odbc.discovery[streaming_list, ${ODBC_CONN}]'
+          delay: 12h
+          params: |
+            SELECT  client_addr, client_hostname, application_name, usename, state, sync_state
+            FROM    pg_stat_replication
+          lifetime: 1d
+          description: 'Low level discovery for streaming replication servers which connected to this server.'
+          item_prototypes:
+            -
+              name: '[PostgreSQL] Streaming: Lag with {#NODE} in bytes'
+              type: ODBC
+              key: 'db.odbc.select[streaming-lag-bytes, ${ODBC_CONN}]'
+              history: 1w
+              trends: 90d
+              units: b
+              params: |
+                SELECT  greatest(0,pg_xlog_location_diff(pg_current_xlog_location(), replay_location))
+                FROM    pg_stat_replication
+              applications:
+                -
+                  name: PostgreSQL
+            -
+              name: '[PostgreSQL] Streaming: Lag with {#NODE} in seconds'
+              type: ODBC
+              key: 'db.odbc.select[streaming-lag-seconds, ${ODBC_CONN}]'
+              delay: '60'
+              history: 1w
+              trends: 90d
+              value_type: FLOAT
+              units: s
+              params: |
+                SELECT
+                  CASE
+                     WHEN  pg_last_xlog_receive_location() = pg_last_xlog_replay_location() THEN 0
+                     ELSE  EXTRACT (EPOCH FROM now() - pg_last_xact_replay_timestamp()) END
+              description: |
+                ATTENTION: This check requires access to the remote server postgresql service, respectively, should be determined access in pg_hba.conf on remote server.
+                Example:
+                host zabbix postgres 1.2.3.4/32 trust
+              applications:
+                -
+                  name: PostgreSQL
+            -
+              name: '[PostgreSQL] Streaming: Packet loss with {#NODE}, %'
+              type: SIMPLE
+              key: 'icmppingloss[{#NODE},10,100,,]'
+              history: 1w
+              trends: 90d
+              units: '%'
+              applications:
+                -
+                  name: PostgreSQL
+              trigger_prototypes:
+                -
+                  expression: '{last()}>{$PG_SR_PACKET_LOSS}'
+                  name: 'PostgreSQL: Packet loss with {#NODE} to high ({ITEM.LASTVALUE})'
+                  priority: AVERAGE
+                  manual_close: 'YES'
+          trigger_prototypes:
+            -
+              expression: |
+                {Template DB PostgreSQL ODBC:db.odbc.select[streaming-lag-seconds, ${ODBC_CONN}].last()}>{$PG_SR_LAG_SEC}
+                or
+                {Template DB PostgreSQL ODBC:db.odbc.select[streaming-lag-bytes, ${ODBC_CONN}].last()}>{$PG_SR_LAG_BYTE}
+              name: 'PostgreSQL: Streaming lag with {#NODE} to high (sec={ITEM.LASTVALUE1}, bytes={ITEM.LASTVALUE2})'
+              priority: AVERAGE
+              manual_close: 'YES'
+          graph_prototypes:
+            -
+              name: '[PostgreSQL] Streaming replication lag with {#NODE}'
+              ymin_type_1: FIXED
+              graph_items:
+                -
+                  drawtype: GRADIENT_LINE
+                  color: 0000CC
+                  yaxisside: RIGHT
+                  item:
+                    host: 'Template DB PostgreSQL ODBC'
+                    key: 'db.odbc.select[streaming-lag-bytes, ${ODBC_CONN}]'
+                -
+                  sortorder: '1'
+                  color: 00CC00
+                  yaxisside: RIGHT
+                  item:
+                    host: 'Template DB PostgreSQL ODBC'
+                    key: 'db.odbc.select[streaming-lag-seconds, ${ODBC_CONN}]'
+      tags:
+        -
+          tag: Database
+          value: Postgres
+        -
+          tag: Host
+          value: '{HOST.NAME}'
+      macros:
+        -
+          macro: '{$ODBC_CONN}'
+          description: 'The ODBC Data Source Name'
+        -
+          macro: '{$PG_CACHE_HIT_RATIO}'
+          value: '40'
+        -
+          macro: '{$PG_CHECKPOINTS_REQ_THRESHOLD}'
+          value: '5'
+        -
+          macro: '{$PG_CONFLICTS_THRESHOLD}'
+          value: '0'
+        -
+          macro: '{$PG_CONN_IDLE_IN_TRANSACTION}'
+          value: '3'
+        -
+          macro: '{$PG_CONN_TOTAL_PCT}'
+          value: '90'
+        -
+          macro: '{$PG_CONN_WAITING}'
+          value: '0'
+        -
+          macro: '{$PG_DATABASE_SIZE_THRESHOLD}'
+          value: '100000000000'
+        -
+          macro: '{$PG_DEADLOCKS_THRESHOLD}'
+          value: '0'
+        -
+          macro: '{$PG_LONG_QUERY_THRESHOLD}'
+          value: '30'
+        -
+          macro: '{$PG_PING_THRESHOLD_MS}'
+          value: '1000'
+        -
+          macro: '{$PG_PROCESS_NAME}'
+          value: postgres
+        -
+          macro: '{$PG_SR_LAG_BYTE}'
+          value: '50000000'
+        -
+          macro: '{$PG_SR_LAG_SEC}'
+          value: '600'
+        -
+          macro: '{$PG_SR_PACKET_LOSS}'
+          value: '10'
+        -
+          macro: '{$PG_UPTIME_THRESHOLD}'
+          value: '600'
+  graphs:
+    -
+      name: 'PostgreSQL bgwriter'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          color: 00CC00
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[buffers_alloc, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: 0000CC
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[buffers_clean, ${ODBC_CONN}]'
+        -
+          sortorder: '2'
+          color: CC0000
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[buffers_backend, ${ODBC_CONN}]'
+        -
+          sortorder: '3'
+          color: CCCC00
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[buffers_checkpoint, ${ODBC_CONN}]'
+        -
+          sortorder: '4'
+          color: '777777'
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[maxwritten_clean, ${ODBC_CONN}]'
+        -
+          sortorder: '5'
+          color: CC00CC
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[buffers_backend_fsync, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL buffers'
+      show_work_period: 'NO'
+      show_triggers: 'NO'
+      graph_items:
+        -
+          drawtype: GRADIENT_LINE
+          color: EEEEEE
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[buffercache-total, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          drawtype: FILLED_REGION
+          color: 0000EE
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[buffercache-used, ${ODBC_CONN}]'
+        -
+          sortorder: '2'
+          drawtype: FILLED_REGION
+          color: 00EE00
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[buffercache-clear, ${ODBC_CONN}]'
+        -
+          sortorder: '3'
+          drawtype: FILLED_REGION
+          color: EE0000
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[buffercache-dirty, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL checkpoints'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          color: 00CC00
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[checkpoints_timed, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: CC0000
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[checkpoints_req, ${ODBC_CONN}]'
+        -
+          sortorder: '2'
+          color: '000000'
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[checkpoint_sync_time, ${ODBC_CONN}]'
+        -
+          sortorder: '3'
+          color: 0000CC
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[checkpoint_write_time, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL connections'
+      percent_right: '100'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          drawtype: GRADIENT_LINE
+          color: EEEEEE
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[connections-total, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: 00BB00
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[connections-active, ${ODBC_CONN}]'
+        -
+          sortorder: '2'
+          color: 0000BB
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[connections-idle, ${ODBC_CONN}]'
+        -
+          sortorder: '3'
+          color: CC00CC
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[connections-idle_in_transaction, ${ODBC_CONN}]'
+        -
+          sortorder: '4'
+          color: '000000'
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[connections-total_pct, ${ODBC_CONN}]'
+        -
+          sortorder: '5'
+          color: BB0000
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[connections-waiting, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL service response'
+      graph_items:
+        -
+          drawtype: GRADIENT_LINE
+          color: 00CC00
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[ping, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: CC0000
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[stats_statements-avg_query_time, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL summary db stats: block hit/read'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          color: 00CC00
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[blks_hit, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: CC0000
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[blks_read, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL summary db stats: events'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          drawtype: GRADIENT_LINE
+          color: 00CC00
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[xact_commit, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: 0000CC
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[conflicts, ${ODBC_CONN}]'
+        -
+          sortorder: '2'
+          color: '000000'
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[deadlocks, ${ODBC_CONN}]'
+        -
+          sortorder: '3'
+          color: CC0000
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[xact_rollback, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL summary db stats: temp files'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          drawtype: GRADIENT_LINE
+          color: CC0000
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[temp_bytes, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: 0000CC
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[temp_files, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL summary db stats: tuples'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          color: '000000'
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[tup_deleted, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: 00CC00
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[tup_inserted, ${ODBC_CONN}]'
+        -
+          sortorder: '2'
+          color: CC0000
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[tup_updated, ${ODBC_CONN}]'
+        -
+          sortorder: '3'
+          color: 0000CC
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[tup_fetched, ${ODBC_CONN}]'
+        -
+          sortorder: '4'
+          color: CC00CC
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[tup_returned, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL transactions'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          color: 00CC00
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[transactions-active, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: '000000'
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[transactions-idle, ${ODBC_CONN}]'
+        -
+          sortorder: '2'
+          color: 00CCCC
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[transactions-prepared, ${ODBC_CONN}]'
+        -
+          sortorder: '3'
+          color: CC0000
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[transactions-waiting, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL uptime'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          color: 00CC00
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[cache-hits, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: 0000CC
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[uptime, ${ODBC_CONN}]'
+    -
+      name: 'PostgreSQL write-ahead log'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          color: 0000CC
+          yaxisside: RIGHT
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[wal-count, ${ODBC_CONN}]'
+        -
+          sortorder: '1'
+          color: 00CC00
+          item:
+            host: 'Template DB PostgreSQL ODBC'
+            key: 'db.odbc.select[wal-write, ${ODBC_CONN}]'
