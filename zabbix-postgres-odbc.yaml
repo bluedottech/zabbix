@@ -22,7 +22,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Blocks hit per second'
           type: ODBC
-          key: 'db.odbc.select[blks_hit, ${ODBC_CONN}]'
+          key: 'db.odbc.select[blks_hit, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -41,7 +41,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Blocks read per second'
           type: ODBC
-          key: 'db.odbc.select[blks_read, ${ODBC_CONN}]'
+          key: 'db.odbc.select[blks_read, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -60,7 +60,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] Buffers: Clear'
           type: ODBC
-          key: 'db.odbc.select[buffercache-clear, ${ODBC_CONN}]'
+          key: 'db.odbc.select[buffercache-clear, {$ODBC_CONN}]'
           delay: 10m
           history: 30d
           status: DISABLED
@@ -80,7 +80,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] Buffers: Dirty'
           type: ODBC
-          key: 'db.odbc.select[buffercache-dirty, ${ODBC_CONN}]'
+          key: 'db.odbc.select[buffercache-dirty, {$ODBC_CONN}]'
           delay: 10m
           history: 30d
           status: DISABLED
@@ -101,7 +101,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] Buffers: Total'
           type: ODBC
-          key: 'db.odbc.select[buffercache-total, ${ODBC_CONN}]'
+          key: 'db.odbc.select[buffercache-total, {$ODBC_CONN}]'
           delay: 10m
           history: 30d
           status: DISABLED
@@ -121,7 +121,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] Buffers: Used'
           type: ODBC
-          key: 'db.odbc.select[buffercache-used, ${ODBC_CONN}]'
+          key: 'db.odbc.select[buffercache-used, {$ODBC_CONN}]'
           delay: 10m
           history: 30d
           status: DISABLED
@@ -142,7 +142,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: bgwriter - Buffers allocated'
           type: ODBC
-          key: 'db.odbc.select[buffers_alloc, ${ODBC_CONN}]'
+          key: 'db.odbc.select[buffers_alloc, {$ODBC_CONN}]'
           delay: '600'
           history: 30d
           units: b
@@ -164,7 +164,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: bgwriter - Buffers written directly by a backend'
           type: ODBC
-          key: 'db.odbc.select[buffers_backend, ${ODBC_CONN}]'
+          key: 'db.odbc.select[buffers_backend, {$ODBC_CONN}]'
           delay: '600'
           history: 30d
           units: b
@@ -186,7 +186,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: bgwriter - Times a backend had to execute its own fsync'
           type: ODBC
-          key: 'db.odbc.select[buffers_backend_fsync, ${ODBC_CONN}]'
+          key: 'db.odbc.select[buffers_backend_fsync, {$ODBC_CONN}]'
           delay: '600'
           history: 30d
           params: |
@@ -203,7 +203,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: bgwriter - Buffers written during checkpoints'
           type: ODBC
-          key: 'db.odbc.select[buffers_checkpoint, ${ODBC_CONN}]'
+          key: 'db.odbc.select[buffers_checkpoint, {$ODBC_CONN}]'
           delay: '600'
           history: 30d
           units: b
@@ -225,7 +225,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: bgwriter - Buffers written by the bgwriter'
           type: ODBC
-          key: 'db.odbc.select[buffers_clean, ${ODBC_CONN}]'
+          key: 'db.odbc.select[buffers_clean, {$ODBC_CONN}]'
           delay: '600'
           history: 30d
           units: b
@@ -247,7 +247,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] General: Cache - Hit ratio'
           type: ODBC
-          key: 'db.odbc.select[cache-hits, ${ODBC_CONN}]'
+          key: 'db.odbc.select[cache-hits, {$ODBC_CONN}]'
           delay: 1h
           history: 30d
           value_type: FLOAT
@@ -269,7 +269,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: bgwriter - Required checkpoints'
           type: ODBC
-          key: 'db.odbc.select[checkpoints_req, ${ODBC_CONN}]'
+          key: 'db.odbc.select[checkpoints_req, {$ODBC_CONN}]'
           delay: '600'
           history: 30d
           params: |
@@ -292,7 +292,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: bgwriter - Checkpoints by timeout'
           type: ODBC
-          key: 'db.odbc.select[checkpoints_timed, ${ODBC_CONN}]'
+          key: 'db.odbc.select[checkpoints_timed, {$ODBC_CONN}]'
           delay: '600'
           history: 30d
           params: |
@@ -309,7 +309,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: bgwriter - Sync time'
           type: ODBC
-          key: 'db.odbc.select[checkpoint_sync_time, ${ODBC_CONN}]'
+          key: 'db.odbc.select[checkpoint_sync_time, {$ODBC_CONN}]'
           delay: '600'
           history: 30d
           units: ms
@@ -327,7 +327,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: bgwriter - Write time'
           type: ODBC
-          key: 'db.odbc.select[checkpoint_write_time, ${ODBC_CONN}]'
+          key: 'db.odbc.select[checkpoint_write_time, {$ODBC_CONN}]'
           delay: '600'
           history: 30d
           units: ms
@@ -345,7 +345,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Registered conflicts'
           type: ODBC
-          key: 'db.odbc.select[conflicts, ${ODBC_CONN}]'
+          key: 'db.odbc.select[conflicts, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -370,7 +370,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: connections - Number of active'
           type: ODBC
-          key: 'db.odbc.select[connections-active, ${ODBC_CONN}]'
+          key: 'db.odbc.select[connections-active, {$ODBC_CONN}]'
           delay: '60'
           history: 30d
           params: |
@@ -385,7 +385,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: connections - Number of idle'
           type: ODBC
-          key: 'db.odbc.select[connections-idle, ${ODBC_CONN}]'
+          key: 'db.odbc.select[connections-idle, {$ODBC_CONN}]'
           delay: '60'
           history: 30d
           params: |
@@ -400,7 +400,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: connections - Number of idle in transaction'
           type: ODBC
-          key: 'db.odbc.select[connections-idle_in_transaction, ${ODBC_CONN}]'
+          key: 'db.odbc.select[connections-idle_in_transaction, {$ODBC_CONN}]'
           delay: '60'
           history: 30d
           params: |
@@ -421,7 +421,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: connections - Number of prepared'
           type: ODBC
-          key: 'db.odbc.select[connections-prepared, ${ODBC_CONN}]'
+          key: 'db.odbc.select[connections-prepared, {$ODBC_CONN}]'
           delay: '60'
           history: 30d
           params: |
@@ -434,7 +434,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: connections - Total'
           type: ODBC
-          key: 'db.odbc.select[connections-total, ${ODBC_CONN}]'
+          key: 'db.odbc.select[connections-total, {$ODBC_CONN}]'
           delay: '60'
           history: 30d
           params: |
@@ -448,7 +448,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: connections - Total (%)'
           type: ODBC
-          key: 'db.odbc.select[connections-total_pct, ${ODBC_CONN}]'
+          key: 'db.odbc.select[connections-total_pct, {$ODBC_CONN}]'
           delay: '60'
           history: 30d
           units: '%'
@@ -469,7 +469,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: connections - Number of waiting'
           type: ODBC
-          key: 'db.odbc.select[connections-waiting, ${ODBC_CONN}]'
+          key: 'db.odbc.select[connections-waiting, {$ODBC_CONN}]'
           delay: '60'
           history: 30d
           status: DISABLED
@@ -491,7 +491,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Registered deadlocks'
           type: ODBC
-          key: 'db.odbc.select[deadlocks, ${ODBC_CONN}]'
+          key: 'db.odbc.select[deadlocks, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -516,7 +516,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: settings - $2'
           type: ODBC
-          key: 'db.odbc.select[fsync, ${ODBC_CONN}]'
+          key: 'db.odbc.select[fsync, {$ODBC_CONN}]'
           delay: '21600'
           history: 30d
           trends: '0'
@@ -529,7 +529,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: settings - $2'
           type: ODBC
-          key: 'db.odbc.select[full_page_writes, ${ODBC_CONN}]'
+          key: 'db.odbc.select[full_page_writes, {$ODBC_CONN}]'
           delay: '21600'
           history: 30d
           trends: '0'
@@ -542,7 +542,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: bgwriter - Max written'
           type: ODBC
-          key: 'db.odbc.select[maxwritten_clean, ${ODBC_CONN}]'
+          key: 'db.odbc.select[maxwritten_clean, {$ODBC_CONN}]'
           delay: '600'
           history: 30d
           units: ms
@@ -560,7 +560,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] General: Ping (Timing)'
           type: ODBC
-          key: 'db.odbc.select[ping, ${ODBC_CONN}]'
+          key: 'db.odbc.select[ping, {$ODBC_CONN}]'
           delay: 10m
           history: 30d
           value_type: FLOAT
@@ -580,7 +580,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] General: Query time (avg)'
           type: ODBC
-          key: 'db.odbc.select[stats_statements-avg_query_time, ${ODBC_CONN}]'
+          key: 'db.odbc.select[stats_statements-avg_query_time, {$ODBC_CONN}]'
           delay: 5m
           history: 30d
           status: DISABLED
@@ -588,7 +588,7 @@ zabbix_export:
           units: ms
           params: |
             
-                                SELECT round((sum(total_time) / sum(calls))::numeric,2)
+            SELECT round((sum(total_time) / sum(calls))::numeric,2)
             FROM   pg_stat_statements
                                 
           applications:
@@ -597,7 +597,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] Streaming: Replication - Stand-by count'
           type: ODBC
-          key: 'db.odbc.select[streaming-count, ${ODBC_CONN}]'
+          key: 'db.odbc.select[streaming-count, {$ODBC_CONN}]'
           delay: 5m
           history: 30d
           params: |
@@ -610,7 +610,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] Streaming: Replication - Recovery state'
           type: ODBC
-          key: 'db.odbc.select[streaming-state, ${ODBC_CONN}]'
+          key: 'db.odbc.select[streaming-state, {$ODBC_CONN}]'
           delay: 1h
           trends: '0'
           value_type: CHAR
@@ -622,7 +622,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: settings - $2'
           type: ODBC
-          key: 'db.odbc.select[synchronous_commit, ${ODBC_CONN}]'
+          key: 'db.odbc.select[synchronous_commit, {$ODBC_CONN}]'
           delay: '21600'
           history: 30d
           trends: '0'
@@ -635,7 +635,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Temp_bytes written'
           type: ODBC
-          key: 'db.odbc.select[temp_bytes, ${ODBC_CONN}]'
+          key: 'db.odbc.select[temp_bytes, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           units: b
@@ -655,7 +655,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Temp_files created'
           type: ODBC
-          key: 'db.odbc.select[temp_files, ${ODBC_CONN}]'
+          key: 'db.odbc.select[temp_files, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -674,7 +674,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] Transactions: Current max active transaction time'
           type: ODBC
-          key: 'db.odbc.select[transactions-active, ${ODBC_CONN}]'
+          key: 'db.odbc.select[transactions-active, {$ODBC_CONN}]'
           history: 30d
           value_type: FLOAT
           units: s
@@ -693,7 +693,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: transactions - Current max idle transaction time'
           type: ODBC
-          key: 'db.odbc.select[transactions-idle, ${ODBC_CONN}]'
+          key: 'db.odbc.select[transactions-idle, {$ODBC_CONN}]'
           delay: '60'
           history: 30d
           value_type: FLOAT
@@ -715,7 +715,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: transactions - Current max prepared transaction time'
           type: ODBC
-          key: 'db.odbc.select[transactions-prepared, ${ODBC_CONN}]'
+          key: 'db.odbc.select[transactions-prepared, {$ODBC_CONN}]'
           delay: '60'
           history: 30d
           value_type: FLOAT
@@ -730,7 +730,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: transactions - Current max waiting transaction time'
           type: ODBC
-          key: 'db.odbc.select[transactions-waiting, ${ODBC_CONN}]'
+          key: 'db.odbc.select[transactions-waiting, {$ODBC_CONN}]'
           delay: '60'
           history: 30d
           status: DISABLED
@@ -753,12 +753,12 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Tuples deleted per second'
           type: ODBC
-          key: 'db.odbc.select[tup_deleted, ${ODBC_CONN}]'
+          key: 'db.odbc.select[tup_deleted, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
             
-                                SELECT  sum(tup_deleted)
+            SELECT  sum(tup_deleted)
             FROM    pg_stat_database
                                 
           description: 'Number of rows deleted by queries.'
@@ -773,7 +773,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Tuples fetched per second'
           type: ODBC
-          key: 'db.odbc.select[tup_fetched, ${ODBC_CONN}]'
+          key: 'db.odbc.select[tup_fetched, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -792,7 +792,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Tuples inserted per second'
           type: ODBC
-          key: 'db.odbc.select[tup_inserted, ${ODBC_CONN}]'
+          key: 'db.odbc.select[tup_inserted, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -811,7 +811,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Tuples returned per second'
           type: ODBC
-          key: 'db.odbc.select[tup_returned, ${ODBC_CONN}]'
+          key: 'db.odbc.select[tup_returned, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -830,7 +830,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Tuples updated per second'
           type: ODBC
-          key: 'db.odbc.select[tup_updated, ${ODBC_CONN}]'
+          key: 'db.odbc.select[tup_updated, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -849,7 +849,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] General: Uptime'
           type: ODBC
-          key: 'db.odbc.select[uptime, ${ODBC_CONN}]'
+          key: 'db.odbc.select[uptime, {$ODBC_CONN}]'
           history: 30d
           units: uptime
           params: 'SELECT  date_part(''epoch'', now() - pg_postmaster_start_time())::int'
@@ -865,7 +865,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] WAL: Segments count'
           type: ODBC
-          key: 'db.odbc.select[wal-count, ${ODBC_CONN}]'
+          key: 'db.odbc.select[wal-count, {$ODBC_CONN}]'
           delay: 5m
           history: 30d
           params: |
@@ -878,7 +878,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] WAL: Write'
           type: ODBC
-          key: 'db.odbc.select[wal-write, ${ODBC_CONN}]'
+          key: 'db.odbc.select[wal-write, {$ODBC_CONN}]'
           delay: 5m
           history: 30d
           status: DISABLED
@@ -896,7 +896,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Commits per second'
           type: ODBC
-          key: 'db.odbc.select[xact_commit, ${ODBC_CONN}]'
+          key: 'db.odbc.select[xact_commit, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -915,7 +915,7 @@ zabbix_export:
         -
           name: 'PostgreSQL: dbstat - Rollbacks per second'
           type: ODBC
-          key: 'db.odbc.select[xact_rollback, ${ODBC_CONN}]'
+          key: 'db.odbc.select[xact_rollback, {$ODBC_CONN}]'
           delay: '120'
           history: 30d
           params: |
@@ -950,7 +950,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] Discovery: Databases'
           type: ODBC
-          key: 'db.odbc.discovery[db_list, ${ODBC_CONN}]'
+          key: 'db.odbc.discovery[db_list, {$ODBC_CONN}]'
           delay: 12h
           params: |
             SELECT  datname, oid
@@ -994,7 +994,7 @@ zabbix_export:
         -
           name: '[PostgreSQL] Discovery: Streaming stand-by'
           type: ODBC
-          key: 'db.odbc.discovery[streaming_list, ${ODBC_CONN}]'
+          key: 'db.odbc.discovery[streaming_list, {$ODBC_CONN}]'
           delay: 12h
           params: |
             SELECT  client_addr, client_hostname, application_name, usename, state, sync_state
@@ -1005,7 +1005,7 @@ zabbix_export:
             -
               name: '[PostgreSQL] Streaming: Lag with {#NODE} in bytes'
               type: ODBC
-              key: 'db.odbc.select[streaming-lag-bytes, ${ODBC_CONN}]'
+              key: 'db.odbc.select[streaming-lag-bytes, {$ODBC_CONN}]'
               history: 1w
               trends: 90d
               units: b
@@ -1018,7 +1018,7 @@ zabbix_export:
             -
               name: '[PostgreSQL] Streaming: Lag with {#NODE} in seconds'
               type: ODBC
-              key: 'db.odbc.select[streaming-lag-seconds, ${ODBC_CONN}]'
+              key: 'db.odbc.select[streaming-lag-seconds, {$ODBC_CONN}]'
               delay: '60'
               history: 1w
               trends: 90d
@@ -1055,9 +1055,9 @@ zabbix_export:
           trigger_prototypes:
             -
               expression: |
-                {Template DB PostgreSQL ODBC:db.odbc.select[streaming-lag-seconds, ${ODBC_CONN}].last()}>{$PG_SR_LAG_SEC}
+                {Template DB PostgreSQL ODBC:db.odbc.select[streaming-lag-seconds, {$ODBC_CONN}].last()}>{$PG_SR_LAG_SEC}
                 or
-                {Template DB PostgreSQL ODBC:db.odbc.select[streaming-lag-bytes, ${ODBC_CONN}].last()}>{$PG_SR_LAG_BYTE}
+                {Template DB PostgreSQL ODBC:db.odbc.select[streaming-lag-bytes, {$ODBC_CONN}].last()}>{$PG_SR_LAG_BYTE}
               name: 'PostgreSQL: Streaming lag with {#NODE} to high (sec={ITEM.LASTVALUE1}, bytes={ITEM.LASTVALUE2})'
               priority: AVERAGE
               manual_close: 'YES'
@@ -1072,14 +1072,14 @@ zabbix_export:
                   yaxisside: RIGHT
                   item:
                     host: 'Template DB PostgreSQL ODBC'
-                    key: 'db.odbc.select[streaming-lag-bytes, ${ODBC_CONN}]'
+                    key: 'db.odbc.select[streaming-lag-bytes, {$ODBC_CONN}]'
                 -
                   sortorder: '1'
                   color: 00CC00
                   yaxisside: RIGHT
                   item:
                     host: 'Template DB PostgreSQL ODBC'
-                    key: 'db.odbc.select[streaming-lag-seconds, ${ODBC_CONN}]'
+                    key: 'db.odbc.select[streaming-lag-seconds, {$ODBC_CONN}]'
       tags:
         -
           tag: Database
@@ -1146,40 +1146,40 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[buffers_alloc, ${ODBC_CONN}]'
+            key: 'db.odbc.select[buffers_alloc, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: 0000CC
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[buffers_clean, ${ODBC_CONN}]'
+            key: 'db.odbc.select[buffers_clean, {$ODBC_CONN}]'
         -
           sortorder: '2'
           color: CC0000
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[buffers_backend, ${ODBC_CONN}]'
+            key: 'db.odbc.select[buffers_backend, {$ODBC_CONN}]'
         -
           sortorder: '3'
           color: CCCC00
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[buffers_checkpoint, ${ODBC_CONN}]'
+            key: 'db.odbc.select[buffers_checkpoint, {$ODBC_CONN}]'
         -
           sortorder: '4'
           color: '777777'
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[maxwritten_clean, ${ODBC_CONN}]'
+            key: 'db.odbc.select[maxwritten_clean, {$ODBC_CONN}]'
         -
           sortorder: '5'
           color: CC00CC
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[buffers_backend_fsync, ${ODBC_CONN}]'
+            key: 'db.odbc.select[buffers_backend_fsync, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL buffers'
       show_work_period: 'NO'
@@ -1191,7 +1191,7 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[buffercache-total, ${ODBC_CONN}]'
+            key: 'db.odbc.select[buffercache-total, {$ODBC_CONN}]'
         -
           sortorder: '1'
           drawtype: FILLED_REGION
@@ -1199,7 +1199,7 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[buffercache-used, ${ODBC_CONN}]'
+            key: 'db.odbc.select[buffercache-used, {$ODBC_CONN}]'
         -
           sortorder: '2'
           drawtype: FILLED_REGION
@@ -1207,7 +1207,7 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[buffercache-clear, ${ODBC_CONN}]'
+            key: 'db.odbc.select[buffercache-clear, {$ODBC_CONN}]'
         -
           sortorder: '3'
           drawtype: FILLED_REGION
@@ -1215,7 +1215,7 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[buffercache-dirty, ${ODBC_CONN}]'
+            key: 'db.odbc.select[buffercache-dirty, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL checkpoints'
       ymin_type_1: FIXED
@@ -1224,27 +1224,27 @@ zabbix_export:
           color: 00CC00
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[checkpoints_timed, ${ODBC_CONN}]'
+            key: 'db.odbc.select[checkpoints_timed, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: CC0000
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[checkpoints_req, ${ODBC_CONN}]'
+            key: 'db.odbc.select[checkpoints_req, {$ODBC_CONN}]'
         -
           sortorder: '2'
           color: '000000'
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[checkpoint_sync_time, ${ODBC_CONN}]'
+            key: 'db.odbc.select[checkpoint_sync_time, {$ODBC_CONN}]'
         -
           sortorder: '3'
           color: 0000CC
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[checkpoint_write_time, ${ODBC_CONN}]'
+            key: 'db.odbc.select[checkpoint_write_time, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL connections'
       percent_right: '100'
@@ -1256,41 +1256,41 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[connections-total, ${ODBC_CONN}]'
+            key: 'db.odbc.select[connections-total, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: 00BB00
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[connections-active, ${ODBC_CONN}]'
+            key: 'db.odbc.select[connections-active, {$ODBC_CONN}]'
         -
           sortorder: '2'
           color: 0000BB
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[connections-idle, ${ODBC_CONN}]'
+            key: 'db.odbc.select[connections-idle, {$ODBC_CONN}]'
         -
           sortorder: '3'
           color: CC00CC
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[connections-idle_in_transaction, ${ODBC_CONN}]'
+            key: 'db.odbc.select[connections-idle_in_transaction, {$ODBC_CONN}]'
         -
           sortorder: '4'
           color: '000000'
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[connections-total_pct, ${ODBC_CONN}]'
+            key: 'db.odbc.select[connections-total_pct, {$ODBC_CONN}]'
         -
           sortorder: '5'
           color: BB0000
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[connections-waiting, ${ODBC_CONN}]'
+            key: 'db.odbc.select[connections-waiting, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL service response'
       graph_items:
@@ -1300,14 +1300,14 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[ping, ${ODBC_CONN}]'
+            key: 'db.odbc.select[ping, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: CC0000
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[stats_statements-avg_query_time, ${ODBC_CONN}]'
+            key: 'db.odbc.select[stats_statements-avg_query_time, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL summary db stats: block hit/read'
       ymin_type_1: FIXED
@@ -1317,14 +1317,14 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[blks_hit, ${ODBC_CONN}]'
+            key: 'db.odbc.select[blks_hit, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: CC0000
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[blks_read, ${ODBC_CONN}]'
+            key: 'db.odbc.select[blks_read, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL summary db stats: events'
       ymin_type_1: FIXED
@@ -1335,28 +1335,28 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[xact_commit, ${ODBC_CONN}]'
+            key: 'db.odbc.select[xact_commit, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: 0000CC
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[conflicts, ${ODBC_CONN}]'
+            key: 'db.odbc.select[conflicts, {$ODBC_CONN}]'
         -
           sortorder: '2'
           color: '000000'
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[deadlocks, ${ODBC_CONN}]'
+            key: 'db.odbc.select[deadlocks, {$ODBC_CONN}]'
         -
           sortorder: '3'
           color: CC0000
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[xact_rollback, ${ODBC_CONN}]'
+            key: 'db.odbc.select[xact_rollback, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL summary db stats: temp files'
       ymin_type_1: FIXED
@@ -1366,14 +1366,14 @@ zabbix_export:
           color: CC0000
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[temp_bytes, ${ODBC_CONN}]'
+            key: 'db.odbc.select[temp_bytes, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: 0000CC
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[temp_files, ${ODBC_CONN}]'
+            key: 'db.odbc.select[temp_files, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL summary db stats: tuples'
       ymin_type_1: FIXED
@@ -1383,35 +1383,35 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[tup_deleted, ${ODBC_CONN}]'
+            key: 'db.odbc.select[tup_deleted, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: 00CC00
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[tup_inserted, ${ODBC_CONN}]'
+            key: 'db.odbc.select[tup_inserted, {$ODBC_CONN}]'
         -
           sortorder: '2'
           color: CC0000
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[tup_updated, ${ODBC_CONN}]'
+            key: 'db.odbc.select[tup_updated, {$ODBC_CONN}]'
         -
           sortorder: '3'
           color: 0000CC
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[tup_fetched, ${ODBC_CONN}]'
+            key: 'db.odbc.select[tup_fetched, {$ODBC_CONN}]'
         -
           sortorder: '4'
           color: CC00CC
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[tup_returned, ${ODBC_CONN}]'
+            key: 'db.odbc.select[tup_returned, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL transactions'
       ymin_type_1: FIXED
@@ -1421,28 +1421,28 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[transactions-active, ${ODBC_CONN}]'
+            key: 'db.odbc.select[transactions-active, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: '000000'
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[transactions-idle, ${ODBC_CONN}]'
+            key: 'db.odbc.select[transactions-idle, {$ODBC_CONN}]'
         -
           sortorder: '2'
           color: 00CCCC
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[transactions-prepared, ${ODBC_CONN}]'
+            key: 'db.odbc.select[transactions-prepared, {$ODBC_CONN}]'
         -
           sortorder: '3'
           color: CC0000
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[transactions-waiting, ${ODBC_CONN}]'
+            key: 'db.odbc.select[transactions-waiting, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL uptime'
       ymin_type_1: FIXED
@@ -1451,14 +1451,14 @@ zabbix_export:
           color: 00CC00
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[cache-hits, ${ODBC_CONN}]'
+            key: 'db.odbc.select[cache-hits, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: 0000CC
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[uptime, ${ODBC_CONN}]'
+            key: 'db.odbc.select[uptime, {$ODBC_CONN}]'
     -
       name: 'PostgreSQL write-ahead log'
       ymin_type_1: FIXED
@@ -1468,10 +1468,10 @@ zabbix_export:
           yaxisside: RIGHT
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[wal-count, ${ODBC_CONN}]'
+            key: 'db.odbc.select[wal-count, {$ODBC_CONN}]'
         -
           sortorder: '1'
           color: 00CC00
           item:
             host: 'Template DB PostgreSQL ODBC'
-            key: 'db.odbc.select[wal-write, ${ODBC_CONN}]'
+            key: 'db.odbc.select[wal-write, {$ODBC_CONN}]'
